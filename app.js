@@ -41,9 +41,21 @@ function do_version() {
 	});
 }
 
+function do_apps() {
+	netget('/drones', function(result) {
+		console.log('detailed info on apps: \n' + pretty.render(result));
+	});
+}
+
+function do_app(name) {
+	netget('/drones/' + name, function(result) {
+		console.log('detailed info on app:' + name + '\n' + pretty.render(result));
+	});
+}
+
 function do_running() {
 	netget('/drones/running', function(result) {
-		console.log('running drones: \n' + pretty.render(result));
+		console.log('running apps: \n' + pretty.render(result));
 	});
 }
 
@@ -63,9 +75,23 @@ program
 
 program
 	.command('running')
-	.description('show running drones')
+	.description('show running apps')
 	.action(function() {
   		do_running();
+	});
+
+program
+	.command('apps')
+	.description('detailed info on apps')
+	.action(function() {
+  		do_apps();
+	});
+
+program
+	.command('app <app_name>')
+	.description('detailed info on app')
+	.action(function(app_name) {
+  		do_app(app_name);
 	});
 
 program.parse(process.argv);
