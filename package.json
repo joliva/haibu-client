@@ -1,0 +1,10 @@
+{
+  "name": "haibu-client",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "commander": "~2.0.0",
+    "prettyjson": "~0.8.1",
+    "restler": "~2.0.1"
+  }
+}
