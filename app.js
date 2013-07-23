@@ -87,9 +87,7 @@ function do_start() {
 	var config;
 
 	try {
-		var foo = fs.readFileSync(config_file).toString();
-		console.log(foo);
-		config = JSON.parse(foo);
+		config = JSON.parse(fs.readFileSync(config_file).toString());
 	}
 	catch(e) {
 		console.error('problem parsing: ' + config_file + '\n' + e);
@@ -108,6 +106,52 @@ function do_stop(name) {
 
 	netpost('/drones/' + config.name + '/stop', {'stop': config}, function(result) {
 		console.log('stopped app(s): ' + config.name + '\n' + pretty.render(result));
+	});
+}
+
+function do_restart(name) {
+	config = {
+		'name': name,
+	}
+
+	netpost('/drones/' + config.name + '/restart', {'restart': config}, function(result) {
+		console.log('restarted app(s): ' + config.name + '\n' + pretty.render(result));
+	});
+}
+
+function do_remove() {
+	set_globals();
+
+	var config;
+
+	try {
+		config = JSON.parse(fs.readFileSync(config_file).toString());
+	}
+	catch(e) {
+		console.error('problem parsing: ' + config_file + '\n' + e);
+		return;
+	}
+
+	netpost('/drones/' + config.name + '/clean', config, function(result) {
+		console.log('removed app: ' + config.name + '\n' + pretty.render(result));
+	});
+}
+
+function do_update() {
+	set_globals();
+
+	var config;
+
+	try {
+		config = JSON.parse(fs.readFileSync(config_file).toString());
+	}
+	catch(e) {
+		console.error('problem parsing: ' + config_file + '\n' + e);
+		return;
+	}
+
+	netpost('/drones/' + config.name + '/update', config, function(result) {
+		console.log('updated app: ' + config.name + '\n' + pretty.render(result));
 	});
 }
 
@@ -147,7 +191,7 @@ program
 	});
 
 program
-	.command('start')
+	.command('start [config_file]')
 	.description('start app')
 	.action(function() {
   		do_start();
@@ -155,9 +199,30 @@ program
 
 program
 	.command('stop <app_name>')
-	.description('stop app')
+	.description('stop all instances of app')
 	.action(function(app_name) {
   		do_stop(app_name);
+	});
+
+program
+	.command('restart <app_name>')
+	.description('restart all instances of app')
+	.action(function(app_name) {
+  		do_restart(app_name);
+	});
+
+program
+	.command('remove [config_file]')
+	.description('stop app, remove source and dependencies (single user)')
+	.action(function() {
+  		do_remove();
+	});
+
+program
+	.command('update [config_file]')
+	.description('stop app, clean old source/dependencies, deploy, restart app')
+	.action(function() {
+  		do_update();
 	});
 
 program

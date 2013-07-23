@@ -3,8 +3,8 @@
 		"name": "hello",
 		"domain": "olivalabs.com",
 		"repository": {
-			"type": "git",
-			"url": "https://github.com/joliva/haibu-client.git"
+			"type": "local",
+			"directory": "/Users/jlo/projects/cloud/haibu-test"
 		},
 		"scripts": {
 			"start": "app.js"
