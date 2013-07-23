@@ -1,0 +1,12 @@
+	{
+		"user": "joliva",
+		"name": "hello",
+		"domain": "olivalabs.com",
+		"repository": {
+			"type": "git",
+			"url": "https://github.com/joliva/haibu-client.git"
+		},
+		"scripts": {
+			"start": "app.js"
+		}
+	}
