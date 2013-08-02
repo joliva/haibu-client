@@ -5,6 +5,7 @@ var rest = require('restler');
 var http = require('http');
 var program = require('commander');
 var pretty = require('prettyjson');
+var pack = require('tar-pack').pack;
 
 var host, port, config_file;
 

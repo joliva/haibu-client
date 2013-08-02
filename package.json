@@ -1,10 +1,23 @@
 {
-  "name": "haibu-client",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "commander": "~2.0.0",
-    "prettyjson": "~0.8.1",
-    "restler": "~2.0.1"
-  }
+	"name": "haibu-client",
+	"version": "0.1.0",
+	"author": "John Oliva",
+	"description": "command line client for use with Haibu <https://github.com/nodejitsu/haibu>",
+	"contributors": [ 
+		{ "name": "John Oliva", "email": "joliva63@gmail.com" } 
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/joliva/haibu-client"
+	},
+	"keywords": [
+		"haibu",
+		"cli"
+	],
+	"license": "Apache 2 <http://www.apache.org/licenses/LICENSE-2.0.html>",
+	"dependencies": {
+		"commander": "~2.0.0",
+		"prettyjson": "~0.8.1",
+		"restler": "~2.0.1"
+	}
 }
