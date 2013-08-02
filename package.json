@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"author": "John Oliva",
 	"description": "command line client for use with Haibu <https://github.com/nodejitsu/haibu>",
+	"preferGlobal": "true",
 	"contributors": [ 
 		{ "name": "John Oliva", "email": "joliva63@gmail.com" } 
 	],
@@ -14,6 +15,7 @@
 		"haibu",
 		"cli"
 	],
+	"bin": {"hc": "./app.js"},
 	"license": "Apache 2 <http://www.apache.org/licenses/LICENSE-2.0.html>",
 	"dependencies": {
 		"commander": "~2.0.0",
