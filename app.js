@@ -158,10 +158,10 @@ function do_update() {
 
 program
 	.usage('[options] command')
-	.option('-h, --host [host]', 'Host')
-	.option('-p, --port [port]', 'Port', parseInt)
-	.option('-c, --config [config_file]', 'Config file (defaults to config.json)')
-	.option('-v, --verbose', 'Verbose output');
+	.option('-s, --host [host]', 'host')
+	.option('-p, --port [port]', 'port', parseInt)
+	.option('-c, --config [config_file]', 'config file (defaults to config.json)')
+	.option('-v, --verbose', 'verbose output');
 
 program
 	.command('version')
@@ -233,4 +233,6 @@ program
 	});
 
 program.parse(process.argv);
+
+if (process.argv.length < 3) program.help();
 
