@@ -1,0 +1,19 @@
+{
+	"user": "user_name",
+	"name": "app_name",
+	"domain": "your_domain",
+	"repository": {
+		"comment": "use one of the forms below and include here for the app repository"
+	},
+	"repository_git": {
+		"type": "git",
+		"url": "https://github.com/user/path_to_project.git"
+	},
+	"repository_local": {
+		"type": "local",
+		"url": "/full/path/to/your/application"
+	},
+	"scripts": {
+		"start": "app.js"
+	}
+}
