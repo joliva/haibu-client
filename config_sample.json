@@ -1,0 +1,33 @@
+{
+	"user": "user_name",
+	"name": "app_name",
+	"domain": "app_domain",
+	"repository": {
+		"comment": "use one of the forms below and include here for the app repository"
+	},
+	"repository_local": {
+		"type": "local",
+		"directory": "/full/path/to/application/directory"
+	},
+	"repository_git": {
+		"type": "git",
+		"url": "http://path/to/git/repository/xxx.git
+	},
+	"repository_tar": {
+		"type": "tar",
+		"protocol": "http",
+		"url": "http://path/to/tar/archive/xxx.tar
+	},
+	"repository_zip": {
+		"type": "zip",
+		"protocol": "http",
+		"url": "http://path/to/zip/archive/xxx.zip
+	},
+	"repository_npm": {
+		"type": "npm",
+		"package": "name of npm package"
+	},
+	"scripts": {
+		"start": "path/to/application/xxx.js"
+	}
+}

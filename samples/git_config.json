@@ -1,0 +1,12 @@
+{
+	"user": "user",
+	"name": "app_git",
+	"domain": "zuperapp.com",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/joliva/hc-git-example.git"
+	},
+	"scripts": {
+		"start": "app.js"
+	}
+}

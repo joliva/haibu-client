@@ -1,11 +1,8 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
 var rest = require('restler');
-var http = require('http');
 var program = require('commander');
 var pretty = require('prettyjson');
-var pack = require('tar-pack').pack;
 
 var host, port, config_file;
 
@@ -58,6 +55,32 @@ function netpost(path, payload, callback) {
 	});
 }
 
+function netpost_file(path, file, callback) {
+	set_globals();
+
+	var fs = require('fs');
+	var request = require('request');
+
+	fs.stat(file, function(err, stat) {
+		if (err) { 
+			console.error(err); 
+			return;
+		}
+
+		var uri = 'http://' + host + ':' + port.toString() + path;
+
+		fs.createReadStream(file)
+			.pipe(request.post({url: uri}, function (err, res, body) {
+				if (err) {
+					console.error(err);
+					return;
+				} else {
+				 callback(JSON.parse(body));
+				}
+			}))
+	});
+}
+
 function do_version() {
 	netget('/version', function(result) {
 		console.log('service version: \n' + pretty.render(result));
@@ -85,6 +108,7 @@ function do_running() {
 function do_start() {
 	set_globals();
 
+	var fs = require('fs');
 	var config;
 
 	try {
@@ -95,9 +119,44 @@ function do_start() {
 		return;
 	}
 
-	netpost('/drones/' + config.name + '/start', {'start': config}, function(result) {
-		console.log('started app: ' + config.name + '\n' + pretty.render(result));
-	});
+	// All app starts are preceded by app deployment. A 'local' repository type
+	// uses a push deployment to deploy a gzipped tar archive of the application 
+	// directory. All other repository types (git, npm, etc.) use a pull 
+	// deployment where Haibu pulls from the specified source location.
+
+	if (config.repository && config.repository.type) {
+		if (config.repository.type === 'local') {
+			// push deployment
+			var temp = require('temp');
+			var spawn = require('child_process').spawn;
+
+			var url = 'http://' + host + ':' + port + '/deploy/' + config.user + '/' + config.name;
+			var tempfile = temp.path({suffix: '.tgz'});
+console.log(tempfile);
+			
+			var args = ['cfz', tempfile, '.'];
+			var options = {};
+			options.cwd = process.cwd() + '/' + config.repository.directory;
+
+			var tar = spawn('tar', args, options);
+			tar.on('close', function(code) {
+				if (code === 0) {
+					netpost_file('/deploy/' + config.user + '/' + config.name, tempfile, function(result) {
+						console.log('local app deployed: ' + config.name + '\n' + pretty.render(result));
+					});
+				} else {
+					console.error('Failed to archive local directory: ' + config.repository.directory);
+				}
+			});
+		} else {
+			// pull deployment
+			netpost('/drones/' + config.name + '/start', {'start': config}, function(result) {
+				console.log('started app: ' + config.name + '\n' + pretty.render(result));
+			});
+		}
+	} else {
+		console.error('unable to extract repository type from: ' + config_file + '\n');
+	}
 }
 
 function do_stop(name) {
@@ -123,6 +182,7 @@ function do_restart(name) {
 function do_remove() {
 	set_globals();
 
+	var fs = require('fs');
 	var config;
 
 	try {
@@ -141,6 +201,7 @@ function do_remove() {
 function do_update() {
 	set_globals();
 
+	var fs = require('fs');
 	var config;
 
 	try {
@@ -193,7 +254,7 @@ program
 
 program
 	.command('start [config_file]')
-	.description('start app')
+	.description('deploy and start app')
 	.action(function() {
   		do_start();
 	});
@@ -221,7 +282,7 @@ program
 
 program
 	.command('update [config_file]')
-	.description('stop app, clean old source/dependencies, deploy, restart app')
+	.description('stop app, clean old source/dependencies, deploy, start app')
 	.action(function() {
   		do_update();
 	});

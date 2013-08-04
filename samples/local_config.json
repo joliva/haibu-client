@@ -1,0 +1,12 @@
+{
+	"user": "user",
+	"name": "app_local",
+	"domain": "zuperapp.com",
+	"repository": {
+		"type": "local",
+		"directory": "app_local"
+	},
+	"scripts": {
+		"start": "app_local/app.js"
+	}
+}
