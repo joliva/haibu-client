@@ -19,8 +19,9 @@
 	"license": "Apache 2 <http://www.apache.org/licenses/LICENSE-2.0.html>",
 	"dependencies": {
 		"commander": "~2.0.0",
-		"tar-pack": "~2.0.0",
 		"prettyjson": "~0.8.1",
-		"restler": "~2.0.1"
+		"restler": "~2.0.1",
+		"temp": "~0.5.1",
+		"request": "~2.25.0"
 	}
 }
