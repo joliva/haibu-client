@@ -1,0 +1,13 @@
+{
+	"user": "user",
+	"name": "app_tar",
+	"domain": "zuperapp.com",
+	"repository": {
+		"type": "tar",
+		"protocol": "http",
+		"url": "http://olivalabs.com/share/hc-tar-example.tar"
+	},
+	"scripts": {
+		"start": "app.js"
+	}
+}

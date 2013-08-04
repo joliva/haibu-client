@@ -1,0 +1,13 @@
+{
+	"user": "user",
+	"name": "app_zip",
+	"domain": "zuperapp.com",
+	"repository": {
+		"type": "zip",
+		"protocol": "http",
+		"url": "http://olivalabs.com/share/hc-zip-example.zip"
+	},
+	"scripts": {
+		"start": "app.js"
+	}
+}
